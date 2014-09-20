@@ -1,0 +1,23 @@
+{
+    "name": "lt-words/lt-wordtypes",
+    "description": "Identification of word types for the Lithuanian language",
+    "license": "MIT",
+    "keywords": ["Lithuanian"],
+    "authors": [
+        {
+            "name": "David Sanchez Crespillo",
+            "email": "davidsanchezcrespillo@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*",
+        "squizlabs/php_codesniffer": "1.*",
+        "phing/phing": "2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "LtWords\\LtWordTypes\\": "src"
+        }
+    }
+}
