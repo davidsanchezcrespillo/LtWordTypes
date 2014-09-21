@@ -48,7 +48,7 @@ class LtWordTypes
 
       $connectionString = 'sqlite:' . __DIR__ . '/../words.sqlite3';
       
-      echo "CONNECTION: $connectionString\n";
+      //echo "CONNECTION: $connectionString\n";
 
       $dbHandler = new PDO($connectionString);
       // Set errormode to exceptions
