@@ -12,11 +12,13 @@ class LtWordTypesTest extends PHPUnit_Framework_TestCase
   
   public function setUp()
   {
-	  $this->_ltWordTypes = new LtWordTypes;
+      $this->_ltWordTypes = new LtWordTypes;
   }
   
   public function testBasic()
   {
-	  $this->assertEquals("", $this->_ltWordTypes->getWordType(""));
+      $this->assertEquals(LtWordTypes::UNKNOWN_WORD_TYPE, $this->_ltWordTypes->getWordType(""));
+      
+      $this->assertEquals(LtWordTypes::REGULAR_NOUN, $this->_ltWordTypes->getWordType("vyras"));
   }
 }
