@@ -46,7 +46,11 @@ class LtWordTypes
     try {
       //Connect to the database and open connections
 
-      $dbHandler = new PDO('sqlite:words.sqlite3');
+      $connectionString = 'sqlite:' . __DIR__ . '/../words.sqlite3';
+      
+      echo "CONNECTION: $connectionString\n";
+
+      $dbHandler = new PDO($connectionString);
       // Set errormode to exceptions
       $dbHandler->setAttribute(
           PDO::ATTR_ERRMODE, 
