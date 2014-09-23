@@ -62,7 +62,7 @@ class LtWordTypes
           "SELECT * FROM words WHERE words.word = ?"
       );
 
-      if ($statement->execute(array($word))) {
+      if ($statement->execute(array(mb_strtolower($word, 'UTF-8')))) {
           while ($row = $statement->fetch()) {
               //echo "Id: " . $row['id'] . "\n";
               //echo "Word: " . $row['word'] . "\n";
