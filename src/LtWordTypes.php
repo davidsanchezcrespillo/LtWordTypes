@@ -21,16 +21,16 @@ class LtWordTypes
    */
   private function _getType($flags)
   {
-      if (strpos($flags, "D") !== false) {
-          return self::REGULAR_NOUN;
+      if (strpos($flags, "M") !== false) {
+          return self::IRREGULAR_FEMENINE_NOUN;
       }
-      
+
       if (strpos($flags, "V") !== false) {
           return self::IRREGULAR_MASCULINE_NOUN;
       }
 
-      if (strpos($flags, "M") !== false) {
-          return self::IRREGULAR_FEMENINE_NOUN;
+      if (strpos($flags, "D") !== false) {
+          return self::REGULAR_NOUN;
       }
   }
 
