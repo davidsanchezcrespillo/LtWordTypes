@@ -17,21 +17,23 @@ class LtWordTypes
    * Select a type depending on the flags received from the DB.
    * The flags are encoded following the ispell LT dictionary.
    * @param string $flags the flags stored in the DB
-   * @return int a constant
+   * @return array a list containing several constants
    */
   private function _getType($flags)
   {
       if (strpos($flags, "M") !== false) {
-          return self::IRREGULAR_FEMENINE_NOUN;
+          return array(self::IRREGULAR_FEMENINE_NOUN);
       }
 
       if (strpos($flags, "V") !== false) {
-          return self::IRREGULAR_MASCULINE_NOUN;
+          return array(self::IRREGULAR_MASCULINE_NOUN);
       }
 
       if (strpos($flags, "D") !== false) {
-          return self::REGULAR_NOUN;
+          return array(self::REGULAR_NOUN);
       }
+      
+      return array();
   }
 
   /**
@@ -41,7 +43,7 @@ class LtWordTypes
    */
   public function getWordType($word)
   {
-    $returnType = self::UNKNOWN_WORD_TYPE;
+    $returnType = array(self::UNKNOWN_WORD_TYPE);
 
     try {
       //Connect to the database and open connections

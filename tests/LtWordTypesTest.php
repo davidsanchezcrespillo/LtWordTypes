@@ -17,14 +17,19 @@ class LtWordTypesTest extends PHPUnit_Framework_TestCase
   
   public function testBasic()
   {
-      $this->assertEquals(LtWordTypes::UNKNOWN_WORD_TYPE, $this->_ltWordTypes->getWordType(""));
+      $emptyType = $this->_ltWordTypes->getWordType("");
       
-      $this->assertEquals(LtWordTypes::REGULAR_NOUN, $this->_ltWordTypes->getWordType("vyras"));
-      $this->assertEquals(LtWordTypes::REGULAR_NOUN, $this->_ltWordTypes->getWordType("dėdė"));
-      $this->assertEquals(LtWordTypes::REGULAR_NOUN, $this->_ltWordTypes->getWordType("dėdĖ"));
+      $this->assertInternalType('array', $emptyType);
+      $this->assertContains(LtWordTypes::UNKNOWN_WORD_TYPE, $emptyType);
+      
+      $this->assertContains(LtWordTypes::REGULAR_NOUN, $this->_ltWordTypes->getWordType("vyras"));
+      $this->assertContains(LtWordTypes::REGULAR_NOUN, $this->_ltWordTypes->getWordType("dėdė"));
+      $this->assertContains(LtWordTypes::REGULAR_NOUN, $this->_ltWordTypes->getWordType("dėdĖ"));
 
-      $this->assertEquals(LtWordTypes::IRREGULAR_MASCULINE_NOUN, $this->_ltWordTypes->getWordType("vanduo"));
-      $this->assertEquals(LtWordTypes::IRREGULAR_MASCULINE_NOUN, $this->_ltWordTypes->getWordType("DanTis"));
+      $this->assertContains(LtWordTypes::IRREGULAR_MASCULINE_NOUN, $this->_ltWordTypes->getWordType("vanduo"));
+      $this->assertContains(LtWordTypes::IRREGULAR_MASCULINE_NOUN, $this->_ltWordTypes->getWordType("DanTis"));
 
+      $this->assertContains(LtWordTypes::IRREGULAR_FEMENINE_NOUN, $this->_ltWordTypes->getWordType("sesuo"));
+      $this->assertContains(LtWordTypes::IRREGULAR_FEMENINE_NOUN, $this->_ltWordTypes->getWordType("ausis"));
   }
 }
