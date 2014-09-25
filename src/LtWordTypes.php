@@ -12,6 +12,8 @@ class LtWordTypes
   const REGULAR_NOUN = 0;
   const IRREGULAR_MASCULINE_NOUN = 1;
   const IRREGULAR_FEMENINE_NOUN = 2;
+  const SOFT_GENITIVE_NOUN = 3;
+  const HARD_GENITIVE_NOUN = 4;
 
   /**
    * Select a type depending on the flags received from the DB.
@@ -21,19 +23,28 @@ class LtWordTypes
    */
   private function _getType($flags)
   {
+      $returnArray = array();
       if (strpos($flags, "M") !== false) {
-          return array(self::IRREGULAR_FEMENINE_NOUN);
+          array_push($returnArray, self::IRREGULAR_FEMENINE_NOUN);
       }
 
       if (strpos($flags, "V") !== false) {
-          return array(self::IRREGULAR_MASCULINE_NOUN);
+          array_push($returnArray, self::IRREGULAR_MASCULINE_NOUN);
       }
 
       if (strpos($flags, "D") !== false) {
-          return array(self::REGULAR_NOUN);
+          array_push($returnArray, self::REGULAR_NOUN);
       }
       
-      return array();
+      if (strpos($flags, "I") !== false) {
+          array_push($returnArray, self::SOFT_GENITIVE_NOUN);
+      }
+      
+      if (strpos($flags, "K") !== false) {
+          array_push($returnArray, self::HARD_GENITIVE_NOUN);
+      }
+      
+      return $returnArray;
   }
 
   /**

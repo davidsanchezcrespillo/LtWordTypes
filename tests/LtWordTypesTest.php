@@ -30,6 +30,8 @@ class LtWordTypesTest extends PHPUnit_Framework_TestCase
       $this->assertContains(LtWordTypes::IRREGULAR_MASCULINE_NOUN, $this->_ltWordTypes->getWordType("DanTis"));
 
       $this->assertContains(LtWordTypes::IRREGULAR_FEMENINE_NOUN, $this->_ltWordTypes->getWordType("sesuo"));
+
       $this->assertContains(LtWordTypes::IRREGULAR_FEMENINE_NOUN, $this->_ltWordTypes->getWordType("ausis"));
+      $this->assertContains(LtWordTypes::HARD_GENITIVE_NOUN, $this->_ltWordTypes->getWordType("ausis"));
   }
 }
