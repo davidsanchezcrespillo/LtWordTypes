@@ -48,13 +48,13 @@ class LtWordTypes
   }
 
   /**
-   * Get the type of a Lithuanian word.
-   * The input is a word in Lithuanian.
-   * The output will be the type.
+   * Get a word record from the database;
+   * @param string $word the word to check
+   * @return array the whole record
    */
-  public function getWordType($word)
+  private function getWordFromDb($word)
   {
-    $returnType = array(self::UNKNOWN_WORD_TYPE);
+    $retrievedRecord = array();
 
     try {
       //Connect to the database and open connections
@@ -81,7 +81,7 @@ class LtWordTypes
               //echo "Word: " . $row['word'] . "\n";
               //echo "Flags: " . $row['flags'] . "\n";
               //echo "\n";
-              $returnType = $this->_getType($row['flags']);
+              $retrievedRecord = $row;
           }
       }
 
@@ -93,6 +93,33 @@ class LtWordTypes
       echo $e->getMessage() . "\n";
     }
     
+    return $retrievedRecord;
+  }
+
+  /**
+   * Get the type of a Lithuanian word.
+   * @param string $word a word in Lithuanian.
+   * @return array all the types for that word
+   */
+  public function getWordType($word)
+  {
+    //echo "WORD: '$word'\n";
+    $returnType = array(self::UNKNOWN_WORD_TYPE);
+    //print_r($returnType);
+
+    $wordRecord = $this->getWordFromDb($word);
+    //print_r($wordRecord);
+
+    if (isset($wordRecord['flags'])) {
+      $returnType = $this->_getType($wordRecord['flags']);
+    }
+
+    //print_r($returnType);
+
     return $returnType;
+  }
+  
+  public function getSimilarWords($word)
+  {
   }
 }
