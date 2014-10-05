@@ -106,6 +106,7 @@ class LtWordTypes
     //echo "WORD: '$word'\n";
     $returnType = array(self::UNKNOWN_WORD_TYPE);
     //print_r($returnType);
+    $returnWord = "";
 
     $wordRecord = $this->getWordFromDb($word);
     //print_r($wordRecord);
@@ -113,10 +114,14 @@ class LtWordTypes
     if (isset($wordRecord['flags'])) {
       $returnType = $this->_getType($wordRecord['flags']);
     }
+    
+    if (isset($wordRecord['word'])) {
+      $returnWord = $wordRecord['word'];
+    }
 
     //print_r($returnType);
 
-    return $returnType;
+    return array("word" => $returnWord, "type" => $returnType);
   }
   
   public function getSimilarWords($word)
