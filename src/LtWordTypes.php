@@ -102,17 +102,13 @@ class LtWordTypes
           PDO::ERRMODE_EXCEPTION
       );
 
-      // Register the collate function
-      //$dbHandler->sqliteCreateFunction(
-      //  'ltcollate', 'collateWord', 1
-      //);
-
       // Select all data from memory db messages table 
       $statement = $dbHandler->prepare(
-          "SELECT * FROM words WHERE words.word = ?"
+          "SELECT * FROM words WHERE words.asciiword = ?"
       );
 
-      if ($statement->execute(array(mb_strtolower($word, 'UTF-8')))) {
+      $wordToCheck = $this->collateWord(mb_strtolower($word, 'UTF-8'));
+      if ($statement->execute(array($wordToCheck))) {
           while ($row = $statement->fetch()) {
               //echo "Id: " . $row['id'] . "\n";
               //echo "Word: " . $row['word'] . "\n";
