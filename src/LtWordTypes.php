@@ -15,6 +15,37 @@ class LtWordTypes
   const SOFT_GENITIVE_NOUN = 3;
   const HARD_GENITIVE_NOUN = 4;
 
+  /*
+   * Collates a word for comparison purposes.
+   * @param string $word the word to collate
+   * @return string the collated word
+   */
+  public function collateWord($word)
+  {
+      $trans = array(
+          "ą" => "a",
+          "č" => "c",
+          "ę" => "e",
+          "ė" => "e",
+          "į" => "i",
+          "š" => "s",
+          "ų" => "u",
+          "ū" => "u",
+          "ž" => "z",
+          "Ą" => "A",
+          "Č" => "C",
+          "Ę" => "E",
+          "Ė" => "E",
+          "Į" => "I",
+          "Š" => "S",
+          "Ų" => "U",
+          "Ū" => "U",
+          "Ž" => "Z",
+      );
+
+      return strtr($word, $trans);
+  }
+
   /**
    * Select a type depending on the flags received from the DB.
    * The flags are encoded following the ispell LT dictionary.
@@ -47,6 +78,7 @@ class LtWordTypes
       return $returnArray;
   }
 
+
   /**
    * Get a word record from the database;
    * @param string $word the word to check
@@ -69,7 +101,12 @@ class LtWordTypes
           PDO::ATTR_ERRMODE, 
           PDO::ERRMODE_EXCEPTION
       );
- 
+
+      // Register the collate function
+      //$dbHandler->sqliteCreateFunction(
+      //  'ltcollate', 'collateWord', 1
+      //);
+
       // Select all data from memory db messages table 
       $statement = $dbHandler->prepare(
           "SELECT * FROM words WHERE words.word = ?"

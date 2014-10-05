@@ -38,6 +38,10 @@ class LtWordTypesTest extends PHPUnit_Framework_TestCase
   
   public function testReplacements()
   {
-      
+      $this->assertEquals("", $this->_ltWordTypes->collateWord(""));
+      $this->assertEquals("aceeisuuz", $this->_ltWordTypes->collateWord("ąčęėįšųūž"));
+      $this->assertEquals("ACEEISUUZ", $this->_ltWordTypes->collateWord("ĄČĘĖĮŠŲŪŽ"));
+      $this->assertEquals("zvirblis", $this->_ltWordTypes->collateWord("žvirblis"));
+      $this->assertEquals("Zvirblis", $this->_ltWordTypes->collateWord("Žvirblis"));
   }
 }
