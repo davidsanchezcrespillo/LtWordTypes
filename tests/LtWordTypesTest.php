@@ -44,4 +44,10 @@ class LtWordTypesTest extends PHPUnit_Framework_TestCase
       $this->assertEquals("zvirblis", $this->_ltWordTypes->collateWord("žvirblis"));
       $this->assertEquals("Zvirblis", $this->_ltWordTypes->collateWord("Žvirblis"));
   }
+  
+  public function testCollation()
+  {
+      $this->assertContains(LtWordTypes::REGULAR_NOUN, $this->_ltWordTypes->getWordType("dede")["type"]);
+      $this->assertEquals("dėdė", $this->_ltWordTypes->getWordType("dede")["word"]);
+  }
 }
