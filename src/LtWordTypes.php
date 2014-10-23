@@ -104,7 +104,7 @@ class LtWordTypes
 
       // Select all data from memory db messages table 
       $statement = $dbHandler->prepare(
-          "SELECT * FROM words WHERE words.asciiword = ?"
+          "SELECT * FROM words WHERE lower(words.asciiword) = ?"
       );
 
       $wordToCheck = $this->collateWord(mb_strtolower($word, 'UTF-8'));
