@@ -50,4 +50,21 @@ class LtWordTypesTest extends PHPUnit_Framework_TestCase
       $this->assertContains(LtWordTypes::REGULAR_NOUN, $this->_ltWordTypes->getWordType("dede")["type"]);
       $this->assertEquals("dėdė", $this->_ltWordTypes->getWordType("dede")["word"]);
   }
+  
+  public function testSuggestions()
+  {
+      $flags = array("D", "K", "I", "M", "V");
+      $suggestions = $this->_ltWordTypes->getSuggestions("vyr", $flags);
+      $this->assertInternalType('array', $suggestions);
+      $this->assertContains("vyras", $suggestions);
+      $this->assertCount(15, $suggestions);
+      
+      $suggestions = $this->_ltWordTypes->getSuggestions("deb", $flags);
+      $this->assertInternalType('array', $suggestions);
+      $this->assertContains("debesis", $suggestions);
+      $this->assertCount(18, $suggestions);
+
+      //echo(count($suggestions));
+      //echo(print_r($suggestions, true));
+  }
 }

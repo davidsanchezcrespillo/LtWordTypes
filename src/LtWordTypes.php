@@ -130,6 +130,75 @@ class LtWordTypes
   }
 
   /**
+   * Get suggested words of a given type, beginning with a certain prefix;
+   * @param string $wordPrefix the word prefix
+   * @param array $flags list of flags indicating the word type
+   * @return array a list of suggested words
+   */
+  public function getSuggestions($wordPrefix, $flags)
+  {
+    $retrievedRecords = array();
+
+    try {
+      //Connect to the database and open connections
+
+      $connectionString = 'sqlite:' . __DIR__ . '/../words.sqlite3';
+      
+      //echo "CONNECTION: $connectionString\n";
+
+      $dbHandler = new PDO($connectionString);
+      // Set errormode to exceptions
+      $dbHandler->setAttribute(
+          PDO::ATTR_ERRMODE, 
+          PDO::ERRMODE_EXCEPTION
+      );
+
+      // Select all data from memory db messages table 
+      $statement = $dbHandler->prepare(
+          "SELECT word, flags FROM words " .
+          "WHERE words.asciiword LIKE ? || '%' " .
+          "ORDER BY word"
+      );
+
+      $wordPrefixToCheck = $this->collateWord(
+          mb_strtolower($wordPrefix, 'UTF-8')
+      );
+      if ($statement->execute(array($wordPrefixToCheck))) {
+          while ($row = $statement->fetch()) {
+              //echo "Id: " . $row['id'] . "\n";
+              //echo "Word: " . $row['word'] . "\n";
+              //echo "Flags: " . $row['flags'] . "\n";
+              //echo "\n";
+              $retrievedWord = $row['word'];
+              $retrievedFlags = $row['flags'];
+              
+              $flagFound = false;
+              foreach ($flags as $flag) {
+                  if (strpos($retrievedFlags, $flag) !== false) {
+                      $flagFound = true;
+                      break;
+                  }
+              }
+              if (!$flagFound) {
+                  continue;
+              }
+              
+              array_push($retrievedRecords, $retrievedWord);
+          }
+      }
+
+      //Close db connections
+      $dbHandler = null;
+    }
+    catch(PDOException $e) {
+      // Print PDOException message
+      echo $e->getMessage() . "\n";
+    }
+    
+    return $retrievedRecords;
+  }
+
+  /**
    * Get the type of a Lithuanian word.
    * @param string $word a word in Lithuanian.
    * @return array all the types for that word
@@ -157,7 +226,4 @@ class LtWordTypes
     return array("word" => $returnWord, "type" => $returnType);
   }
   
-  public function getSimilarWords($word)
-  {
-  }
 }
