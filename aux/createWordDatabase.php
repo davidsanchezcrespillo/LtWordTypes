@@ -58,23 +58,6 @@
     **************************************/
  
     $allWords = file("liet-utf8.dict");
-
-    // Array with some test data to insert to database             
-    $words = array(
-        array(
-            'word' => 'Vyras',
-            'flags' => 'D'
-        ),
-        array(
-            'word' => 'Vaikas',
-            'flags' => 'D'
-        ),
-    );
- 
- 
-    /**************************************
-    * Play with databases and tables      *
-    **************************************/
  
     // Prepare INSERT statement to SQLite3 file db
     $insert = "INSERT INTO words (word, asciiword, flags) 
@@ -105,7 +88,12 @@
       //$flags = $w['flags'];
  
       // Execute statement
-      $stmt->execute();
+      $result = $stmt->execute();
+      
+      if ($result == false) {
+          echo "Error inserting word $word\n";
+          break;
+      }
     }
  
     // Select all data from memory db messages table 
@@ -120,13 +108,6 @@
       //echo "\n";
     }
     echo "Number of words: $numRows\n"; 
-
-    /**************************************
-    * Drop tables                         *
-    **************************************/
- 
-    // Drop table messages from file db
-    //$file_db->exec("DROP TABLE words");
  
     /**************************************
     * Close db connections                *

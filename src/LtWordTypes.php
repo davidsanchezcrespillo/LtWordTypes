@@ -14,6 +14,7 @@ class LtWordTypes
   const IRREGULAR_FEMENINE_NOUN = 2;
   const SOFT_GENITIVE_NOUN = 3;
   const HARD_GENITIVE_NOUN = 4;
+  const ADJECTIVE = 5;
 
   /*
    * Collates a word for comparison purposes.
@@ -75,6 +76,10 @@ class LtWordTypes
           array_push($returnArray, self::HARD_GENITIVE_NOUN);
       }
       
+      if (strpos($flags, "B") !== false) {
+          array_push($returnArray, self::ADJECTIVE);
+      }
+
       return $returnArray;
   }
 
